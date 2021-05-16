@@ -1,8 +1,10 @@
 package com.dano.clonedano.service;
 
-import com.dano.clonedano.dto.UserRequestDto;
+import com.dano.clonedano.dto.UserLoginRequestDto;
+import com.dano.clonedano.dto.UserSignUpRequestDto;
 import com.dano.clonedano.model.User;
 import com.dano.clonedano.repository.UserRepository;
+import com.dano.clonedano.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +13,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public Long userSignUp(UserRequestDto userRequestDto){
+    public Long userSignUp(UserSignUpRequestDto userRequestDto){
         User user = User.builder()
                 .name(userRequestDto.getName())
                 .email(userRequestDto.getEmail())
@@ -23,7 +26,11 @@ public class UserService {
         userRepository.save(user);
 
         return user.getUserId();
+    }
 
+    public String createToken(UserLoginRequestDto userLoginRequestDto){
+        User user = userRepository.findByName(userLoginRequestDto.getName()).orElse(null);
+        return jwtTokenProvider.createToken(user.getUserId());
     }
 
 }
