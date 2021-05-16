@@ -1,7 +1,15 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:dano
+  profiles:
+    include: real-db
+#  datasource:
+#    url: jdbc:h2:mem:dano
 
   h2:
     console:
       enabled: true
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
