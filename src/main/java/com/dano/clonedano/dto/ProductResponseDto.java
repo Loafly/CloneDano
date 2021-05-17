@@ -11,7 +11,7 @@ public class ProductResponseDto {
 
     private String imageUrl;
 
-    private String name;
+    private String title;
 
     private String price;
 
@@ -19,9 +19,9 @@ public class ProductResponseDto {
 
     private boolean isFree;
 
-    private boolean isTrending;
+    private boolean isThrifty;
 
-    private boolean isBestDeal;
+    private boolean isBest;
 
     private boolean isNew;
 

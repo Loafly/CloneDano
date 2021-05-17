@@ -10,6 +10,7 @@ import com.dano.clonedano.security.JwtTokenProvider;
 import com.dano.clonedano.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +39,6 @@ public class UserService {
     }
 
     public UserResponseDto getUser(UserDetailsImpl userDetails){
-
         User user = userDetails.getUser();
 
         return new UserResponseDto(
@@ -49,12 +49,14 @@ public class UserService {
         );
     }
 
+    @Transactional
     public Long modifyUser(UserDetailsImpl userDetails, UserRequestDto userRequestDto){
         User user = userDetails.getUser();
 
         user.setEmail(userRequestDto.getEmail());
         user.setNickName(userRequestDto.getNickName());
         user.setPhone(userRequestDto.getPhone());
+        user.setPassword(userRequestDto.getPassword());
 
         userRepository.save(user);
 
