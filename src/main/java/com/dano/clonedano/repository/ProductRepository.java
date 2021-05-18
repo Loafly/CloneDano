@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    Product findByTitle(String title);
+
     @Query("select p from Product p where p.isBest = true")
     List<Product> findByBest();
 

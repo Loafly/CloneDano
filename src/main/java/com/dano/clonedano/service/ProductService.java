@@ -13,6 +13,24 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    public List<ProductResponseDto> getProduct(String menu){
+        if (menu.contains("all")){
+            return this.getAllProduct();
+        } else if (menu.contains("dano")){
+            return this.getDanoProduct();
+        } else if (menu.contains("free")){
+            return this.getFreeProduct();
+        } else if (menu.contains("best")){
+            return this.getBestProduct();
+        } else if (menu.contains("new")){
+            return this.getNewProduct();
+        } else if (menu.contains("thrifty")){
+            return this.getThriftyProduct();
+        } else{
+            return null;
+        }
+    }
+
     public List<ProductResponseDto> getAllProduct(){
 
         return productRepository.findAll().stream().map(
