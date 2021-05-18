@@ -36,5 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+### ChromeDriver
+chromedriver
+
 ### application.yml
 application-real-db.yml
