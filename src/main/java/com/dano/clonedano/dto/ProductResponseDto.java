@@ -7,22 +7,11 @@ import lombok.Data;
 @AllArgsConstructor
 public class ProductResponseDto {
 
-    private Long procductId;
+    private Long productId;
 
     private String imageUrl;
 
     private String title;
 
     private String price;
-
-    private boolean isDano;
-
-    private boolean isFree;
-
-    private boolean isThrifty;
-
-    private boolean isBest;
-
-    private boolean isNew;
-
 }

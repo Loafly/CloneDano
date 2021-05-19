@@ -38,12 +38,7 @@ public class ProductService {
                         product.getProductId(),
                         product.getImageUrl(),
                         product.getTitle(),
-                        product.getPrice(),
-                        product.isDano(),
-                        product.isFree(),
-                        product.isThrifty(),
-                        product.isBest(),
-                        product.isNew()
+                        product.getPrice()
                 )).collect(Collectors.toList());
     }
 
@@ -53,12 +48,7 @@ public class ProductService {
                         product.getProductId(),
                         product.getImageUrl(),
                         product.getTitle(),
-                        product.getPrice(),
-                        product.isDano(),
-                        product.isFree(),
-                        product.isThrifty(),
-                        product.isBest(),
-                        product.isNew()
+                        product.getPrice()
                 )).collect(Collectors.toList());
     }
 
@@ -68,12 +58,7 @@ public class ProductService {
                         product.getProductId(),
                         product.getImageUrl(),
                         product.getTitle(),
-                        product.getPrice(),
-                        product.isDano(),
-                        product.isFree(),
-                        product.isThrifty(),
-                        product.isBest(),
-                        product.isNew()
+                        product.getPrice()
                 )).collect(Collectors.toList());
     }
 
@@ -83,12 +68,7 @@ public class ProductService {
                         product.getProductId(),
                         product.getImageUrl(),
                         product.getTitle(),
-                        product.getPrice(),
-                        product.isDano(),
-                        product.isFree(),
-                        product.isThrifty(),
-                        product.isBest(),
-                        product.isNew()
+                        product.getPrice()
                 )).collect(Collectors.toList());
     }
 
@@ -98,12 +78,7 @@ public class ProductService {
                         product.getProductId(),
                         product.getImageUrl(),
                         product.getTitle(),
-                        product.getPrice(),
-                        product.isDano(),
-                        product.isFree(),
-                        product.isThrifty(),
-                        product.isBest(),
-                        product.isNew()
+                        product.getPrice()
                 )).collect(Collectors.toList());
     }
 
@@ -113,12 +88,7 @@ public class ProductService {
                         product.getProductId(),
                         product.getImageUrl(),
                         product.getTitle(),
-                        product.getPrice(),
-                        product.isDano(),
-                        product.isFree(),
-                        product.isThrifty(),
-                        product.isBest(),
-                        product.isNew()
+                        product.getPrice()
                 )).collect(Collectors.toList());
     }
 }
