@@ -73,8 +73,9 @@ public class CartService {
 
             orderRepository.save(order);
             longList.add(order.getOrderId());
+            cartRepository.delete(cart);
         }
-
+        
         return longList;
     }
 
