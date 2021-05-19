@@ -3,9 +3,11 @@ package com.dano.clonedano.service;
 import com.dano.clonedano.dto.CartRequestDto;
 import com.dano.clonedano.dto.CartResponseDto;
 import com.dano.clonedano.model.Cart;
+import com.dano.clonedano.model.Order;
 import com.dano.clonedano.model.Product;
 import com.dano.clonedano.model.User;
 import com.dano.clonedano.repository.CartRepository;
+import com.dano.clonedano.repository.OrderRepository;
 import com.dano.clonedano.repository.ProductRepository;
 import com.dano.clonedano.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     public List<CartResponseDto> getCarts(UserDetailsImpl userDetails){
         User user = userDetails.getUser();
@@ -52,6 +55,27 @@ public class CartService {
         cartRepository.save(cart);
 
         return cart.getCartId();
+    }
+
+    public List<Long> registerOrderRemoveCart(UserDetailsImpl userDetails){
+
+        User user = userDetails.getUser();
+
+        List<Cart> cartList = cartRepository.findByUser(user);
+        List<Long> longList = new ArrayList<>();
+
+        for(Cart cart : cartList){
+            Order order = Order.builder()
+                    .user(user)
+                    .product(cart.getProduct())
+                    .amount(cart.getAmount())
+                    .build();
+
+            orderRepository.save(order);
+            longList.add(order.getOrderId());
+        }
+
+        return longList;
     }
 
     public void removeCart(UserDetailsImpl userDetails, Long cartId){

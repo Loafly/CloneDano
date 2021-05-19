@@ -2,7 +2,6 @@ package com.dano.clonedano.controller;
 
 import com.dano.clonedano.dto.CartRequestDto;
 import com.dano.clonedano.dto.CartResponseDto;
-import com.dano.clonedano.model.Cart;
 import com.dano.clonedano.security.UserDetailsImpl;
 import com.dano.clonedano.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +29,10 @@ public class CartController {
     @DeleteMapping("/api/cart/{cartId}")
     public void removeCart(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long cartId){
         cartService.removeCart(userDetails, cartId);
+    }
+
+    @PostMapping("/api/cart/order")
+    public List<Long> registerOrderRemoveCart(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return cartService.registerOrderRemoveCart(userDetails);
     }
 }
