@@ -50,17 +50,21 @@ public class UserService {
     }
 
     @Transactional
-    public Long modifyUser(UserDetailsImpl userDetails, UserRequestDto userRequestDto){
+    public UserResponseDto modifyUser(UserDetailsImpl userDetails, UserRequestDto userRequestDto){
         User user = userDetails.getUser();
 
         user.setEmail(userRequestDto.getEmail());
-        user.setNickName(userRequestDto.getNickName());
         user.setPhone(userRequestDto.getPhone());
         user.setPassword(userRequestDto.getPassword());
 
         userRepository.save(user);
 
-        return user.getUserId();
+        return new UserResponseDto(
+                user.getUserName(),
+                user.getEmail(),
+                user.getNickName(),
+                user.getPhone()
+        );
     }
 
     public void deleteUser(UserDetailsImpl userDetails){

@@ -36,7 +36,7 @@ public class UserController {
 
     //회원수정
     @PutMapping("/api/user")
-    public Long modifyUser(@AuthenticationPrincipal UserDetailsImpl userDetails,@RequestBody UserRequestDto userRequestDto){
+    public UserResponseDto modifyUser(@AuthenticationPrincipal UserDetailsImpl userDetails,@RequestBody UserRequestDto userRequestDto){
         return userService.modifyUser(userDetails, userRequestDto);
     }
 

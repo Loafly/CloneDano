@@ -9,7 +9,5 @@ public class UserRequestDto {
 
     private String email;
 
-    private String nickName;
-
     private String phone;
 }
