@@ -32,6 +32,7 @@ public class OrderService {
             Product product = productRepository.findByProductId(order.getProduct().getProductId());
 
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
+                    .productId(product.getProductId())
                     .title(product.getTitle())
                     .imageUrl(product.getImageUrl())
                     .price(product.getPrice())
