@@ -88,10 +88,6 @@ public class DanoShopCrawling {
                     isNew = true;
                 }
 
-                System.out.println("strTitle = " + strTitle);
-                System.out.println("strPrice = " + strPrice);
-                System.out.println("strImageUrl = " + strImageUrl);
-
                 Product product = productRepository.findByTitle(strTitle);
 
                 if (product == null){
