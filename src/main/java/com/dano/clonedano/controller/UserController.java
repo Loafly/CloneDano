@@ -7,8 +7,12 @@ import com.dano.clonedano.dto.UserSignUpRequestDto;
 import com.dano.clonedano.security.UserDetailsImpl;
 import com.dano.clonedano.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,20 +28,43 @@ public class UserController {
 
     //로그인
     @PostMapping("/api/user/login")
-    public String userLogin(@RequestBody UserLoginRequestDto userLoginRequestDto) {
-        return userService.createToken(userLoginRequestDto);
+    public ResponseEntity userLogin(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, Errors errors) {
+
+        if (errors.hasErrors()){
+            return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        try{
+            return ResponseEntity.ok(userService.createToken(userLoginRequestDto));
+        } catch (Exception exception){
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
     }
 
     //회원 가입
     @PostMapping("/api/user/signup")
-    public Long registerUsers(@RequestBody UserSignUpRequestDto userSignUpRequestDto) {
-        return userService.userSignUp(userSignUpRequestDto);
+    public ResponseEntity registerUsers(@Valid @RequestBody UserSignUpRequestDto userSignUpRequestDto, Errors errors) {
+
+        if (errors.hasErrors()){
+            return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        try{
+            return ResponseEntity.ok(userService.userSignUp(userSignUpRequestDto));
+        } catch (Exception exception){
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
     }
 
     //회원수정
     @PutMapping("/api/user")
-    public UserResponseDto modifyUser(@AuthenticationPrincipal UserDetailsImpl userDetails,@RequestBody UserRequestDto userRequestDto){
-        return userService.modifyUser(userDetails, userRequestDto);
+    public ResponseEntity modifyUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody UserRequestDto userRequestDto, Errors errors){
+
+        if(errors.hasErrors()){
+            return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        return ResponseEntity.ok(userService.modifyUser(userDetails, userRequestDto));
     }
 
     @DeleteMapping("/api/user")
