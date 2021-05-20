@@ -32,9 +32,16 @@ public class CartService {
         List<CartResponseDto> cartResponseDtoList = new ArrayList<>();
 
         for (Cart cart : cartList){
+            String strPrice = cart.getProduct().getPrice().replace("원","").replace(",","");
+            int price = Integer.parseInt(strPrice) * cart.getAmount();
+            strPrice = String.format("%,d",price);
+
             CartResponseDto cartResponseDto = CartResponseDto.builder()
                     .cartId(cart.getCartId())
                     .amount(cart.getAmount())
+                    .title(cart.getProduct().getTitle())
+                    .imageUrl(cart.getProduct().getImageUrl())
+                    .price(strPrice + "원")
                     .build();
             cartResponseDtoList.add(cartResponseDto);
         }
@@ -75,7 +82,7 @@ public class CartService {
             longList.add(order.getOrderId());
             cartRepository.delete(cart);
         }
-        
+
         return longList;
     }
 

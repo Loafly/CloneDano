@@ -11,6 +11,11 @@ public class CartResponseDto {
 
     private Long cartId;
 
-    private int amount;
+    private String imageUrl;
 
+    private String title;
+
+    private String price;
+
+    private int amount;
 }

@@ -31,11 +31,15 @@ public class OrderService {
         for(Order order : orderList){
             Product product = productRepository.findByProductId(order.getProduct().getProductId());
 
+            String strPrice = product.getPrice().replace("원","").replace(",","");
+            int price = Integer.parseInt(strPrice) * order.getAmount();
+            strPrice = String.format("%,d",price);
+
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                     .productId(product.getProductId())
                     .title(product.getTitle())
                     .imageUrl(product.getImageUrl())
-                    .price(product.getPrice())
+                    .price(strPrice + "원")
                     .amount(order.getAmount())
                     .build();
 
