@@ -56,7 +56,7 @@ public class UserService {
         User user = userRepository.findByUserName(userLoginRequestDto.getUserName()).orElseThrow(
                 () -> new BadRequestException("가입되지 않은 아이디입니다."));
 
-        if (!bCryptPasswordEncoder.encode(userLoginRequestDto.getPassword()).equals(bCryptPasswordEncoder.encode(user.getPassword()))){
+        if (!bCryptPasswordEncoder.encode(userLoginRequestDto.getPassword()).equals(user.getPassword())){
             throw new BadRequestException("잘못된 비밀번호 입니다.");
         }
 
