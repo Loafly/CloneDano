@@ -18,7 +18,7 @@ public class UserSignUpRequestDto {
     private String password;
 
     @NotBlank(message = "아이디를 입력해 주세요")
-    @Pattern(regexp = "^[a-z0-9]{1,20}$", message = "알파벳 소문자와 숫자, 1~20자리수만 가능합니다.")
+    @Pattern(regexp = "^[a-z0-9]{1,20}$", message = "아이디는 알파벳 소문자와 숫자, 1~20자리수만 가능합니다.")
     private String userName;
 
     private String nickName;
