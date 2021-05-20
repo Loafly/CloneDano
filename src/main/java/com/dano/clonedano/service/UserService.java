@@ -11,7 +11,7 @@ import com.dano.clonedano.repository.UserRepository;
 import com.dano.clonedano.security.JwtTokenProvider;
 import com.dano.clonedano.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +26,7 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public Long userSignUp(UserSignUpRequestDto userRequestDto){
 
@@ -36,7 +36,7 @@ public class UserService {
             throw new IllegalArgumentException("이미 가입된 ID가 있습니다.");
         }
 
-        String password = bCryptPasswordEncoder.encode(userRequestDto.getPassword());
+        String password = passwordEncoder.encode(userRequestDto.getPassword());
 
         User user = User.builder()
                 .userName(userRequestDto.getUserName())
@@ -56,7 +56,7 @@ public class UserService {
         User user = userRepository.findByUserName(userLoginRequestDto.getUserName()).orElseThrow(
                 () -> new BadRequestException("가입되지 않은 아이디입니다."));
 
-        if (!bCryptPasswordEncoder.encode(userLoginRequestDto.getPassword()).equals(user.getPassword())){
+        if (!passwordEncoder.matches(userLoginRequestDto.getPassword(),user.getPassword())){
             throw new BadRequestException("잘못된 비밀번호 입니다.");
         }
 
@@ -78,7 +78,7 @@ public class UserService {
     public UserResponseDto modifyUser(UserDetailsImpl userDetails, UserRequestDto userRequestDto){
         User user = userDetails.getUser();
 
-        String password = bCryptPasswordEncoder.encode(userRequestDto.getPassword());
+        String password = passwordEncoder.encode(userRequestDto.getPassword());
 
         user.setEmail(userRequestDto.getEmail());
         user.setPhone(userRequestDto.getPhone());
