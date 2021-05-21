@@ -18,11 +18,11 @@ public class UserSignUpRequestDto {
     private String password;
 
     @NotBlank(message = "아이디를 입력해 주세요")
-    @Pattern(regexp = "^[a-z0-9]{1,20}$", message = "아이디는 알파벳 소문자와 숫자, 1~20자리수만 가능합니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9]{4,16}$", message = "아이디는 알파벳 소문자와 숫자, 4~16자리수만 가능합니다.")
     private String userName;
 
     private String nickName;
 
-    @Pattern(regexp = "^\\d{3}[.-]?\\d{3,4}[.-]?\\d{4}$", message = "휴대폰 전화번호 형식이 아닙니다..")
+    @Pattern(regexp = "^\\d{3}[.-]?\\d{3,4}[.-]?\\d{4}$", message = "휴대폰 전화번호 형식이 아닙니다.")
     private String phone;
 }
