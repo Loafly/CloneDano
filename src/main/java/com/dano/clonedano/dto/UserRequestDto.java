@@ -17,6 +17,6 @@ public class UserRequestDto {
     @Pattern(regexp = "^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*[.][a-zA-Z.]*$", message = "이메일 형식이 아닙니다.")
     private String email;
 
-    @Pattern(regexp = "^\\d{3}[.-]?\\d{3,4}[.-]?\\d{4}$", message = "휴대폰 전화번호 형식이 아닙니다..")
+    @Pattern(regexp = "^\\d{3}[.-]?\\d{4}[.-]?\\d{4}$", message = "휴대폰 전화번호 형식이 아닙니다..")
     private String phone;
 }
