@@ -1,6 +1,5 @@
 package com.dano.clonedano.repository;
 
-import com.dano.clonedano.model.Order;
 import com.dano.clonedano.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
