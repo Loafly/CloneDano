@@ -97,7 +97,7 @@ public class UserService {
     public void deleteUser(UserDetailsImpl userDetails){
         User user = userDetails.getUser();
 
-        List<Order> orderList = orderRepository.findByUser(user);
+        List<Order> orderList = orderRepository.findByUserOrderByModifiedAtDesc(user);
         orderRepository.deleteAll(orderList);
 
         List<Cart> cartList = cartRepository.findByUser(user);
