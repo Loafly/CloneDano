@@ -28,7 +28,7 @@ public class UserController {
 
     //로그인
     @PostMapping("/api/user/login")
-    public ResponseEntity userLogin(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, Errors errors) {
+    public ResponseEntity<Object> userLogin(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, Errors errors) {
 
         if (errors.hasErrors()){
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
@@ -43,7 +43,7 @@ public class UserController {
 
     //회원 가입
     @PostMapping("/api/user/signup")
-    public ResponseEntity registerUsers(@Valid @RequestBody UserSignUpRequestDto userSignUpRequestDto, Errors errors) {
+    public ResponseEntity<Object> registerUsers(@Valid @RequestBody UserSignUpRequestDto userSignUpRequestDto, Errors errors) {
 
         if (errors.hasErrors()){
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
@@ -58,7 +58,7 @@ public class UserController {
 
     //회원수정
     @PutMapping("/api/user")
-    public ResponseEntity modifyUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody UserRequestDto userRequestDto, Errors errors){
+    public ResponseEntity<Object> modifyUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody UserRequestDto userRequestDto, Errors errors){
 
         if(errors.hasErrors()){
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
