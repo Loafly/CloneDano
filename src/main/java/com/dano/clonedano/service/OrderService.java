@@ -24,7 +24,7 @@ public class OrderService {
     public List<OrderResponseDto> getOrder(UserDetailsImpl userDetails){
         User user = userDetails.getUser();
 
-        List<Order> orderList = orderRepository.findByUserOrderByModifiedAt(user);
+        List<Order> orderList = orderRepository.findByUserOrderByModifiedAtDesc(user);
 
         List<OrderResponseDto> orderResponseDtoList = new ArrayList<>();
 
