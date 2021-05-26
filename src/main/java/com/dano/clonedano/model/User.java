@@ -13,7 +13,7 @@ import javax.validation.constraints.Email;
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "userName")
 })
-public class User {
+public class User extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
