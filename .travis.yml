@@ -12,8 +12,7 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.gradle'
 
-script: "sudo chmod 700 ./gradlew
-./gradlew clean build"
+script: "sudo chmod 700 ./gradlew"
 
 # CI 실행 완료시 메일로 알람
 notifications:
