@@ -1,6 +1,5 @@
-[![Build Status](https://travis-ci.com/Loafly/CloneDano.svg?branch=main)](https://travis-ci.com/Loafly/CloneDano)
 
-#다노샵 클론코딩 - BACKEND SERVER REPOSITORY
+#다노샵 클론코딩 - BACKEND SERVER REPOSITORY [![Build Status](https://travis-ci.com/Loafly/CloneDano.svg?branch=main)](https://travis-ci.com/Loafly/CloneDano)
 
 ## [다노샵](http://hanghae99danoclone.shop.s3-website.ap-northeast-2.amazonaws.com/) 서비스 소개
 
