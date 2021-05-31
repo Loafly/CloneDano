@@ -25,3 +25,31 @@
 - 데이터베이스 : MySQL 8.0.16 (AWS RDS)
 - 협업 도구 : Git, Slack
 - 코드 분석 도구 : SonarLint, JaCoCo
+
+## 테이블 설계
+
+![테이블 구조](https://user-images.githubusercontent.com/38175978/120225340-03c86800-c280-11eb-92cd-8cbf9066d012.PNG)
+
+## API 설계
+
+- [Detail api document](https://documenter.getpostman.com/view/15605965/TzRYbPMN)
+
+|기능|Method|URL| Request Params / Body|
+|:---|:---:|:---:|:---:|
+|현재로그인 조회|GET|/api/user||
+|로그인|POST|/api/user/login|userName, password|
+|회원 가입|POST|/api/user/signup|userName,password, email, nickName, phone|
+|회원 수정|PUT|/api/user|password, email, nickName, phone|
+|회원 탈퇴|DELETE|/api/user||
+|전체 상품조회|GET|/api/product/all||
+|인기 상품조회|GET|/api/product/best||
+|신상품조회|GET|/api/product/new||
+|다노 상품조회|GET|/api/product/dano||
+|알뜰 상품조회|GET|/api/product/thrifty||
+|무료배송 상품조회|GET|/api/product/free||
+|장바구니 조회|GET|/api/cart||
+|장바구니 추가|POST|/api/cart|productId, amount|
+|장바구니 개별삭제|DELETE|/api/cart/{cartId}||
+|장바구니에서 주문하기|POST|/api/cart/order||
+|주문내역 조회|GET|/api/order||
+|바로 주문하기|POST|/api/order|productId, amount|
