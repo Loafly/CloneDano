@@ -13,3 +13,40 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+
+---
+spring:
+  profiles: set1
+    include: real-db
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+server:
+  port: 8081
+
+---
+spring:
+  profiles: set2
+    include: real-db
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+server:
+  port: 8082
