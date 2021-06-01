@@ -91,7 +91,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js",
                         "/h2-console/**",
-                        "/api/**")
+                        "/api/**",
+                        "/**")
                 .permitAll()
                 // 그 외 모든 요청은 인증과정 필요
                 .anyRequest().authenticated()
