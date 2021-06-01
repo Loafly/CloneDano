@@ -8,7 +8,6 @@ import com.dano.clonedano.exception.BadRequestException;
 import com.dano.clonedano.model.User;
 import com.dano.clonedano.repository.UserRepository;
 import com.dano.clonedano.security.JwtTokenProvider;
-import com.dano.clonedano.security.UserDetailsImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -91,12 +90,12 @@ class UserServiceTest {
         userSignUpRequestDto.setEmail("test@naver.com");
 
         //when
-        Long userId = userService.userSignUp(userSignUpRequestDto);
+        userService.userSignUp(userSignUpRequestDto);
 
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> userService.userSignUp(userSignUpRequestDto));
 
         //then
-        assertEquals(illegalArgumentException.getMessage(),"이미 가입된 ID가 있습니다.");
+        assertEquals("이미 가입된 ID가 있습니다.",illegalArgumentException.getMessage());
     }
 
     @Test
@@ -126,7 +125,7 @@ class UserServiceTest {
         BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> userService.createToken(userLoginRequestDto));
 
         //then
-        assertEquals(badRequestException.getMessage(),"가입되지 않은 아이디입니다.");
+        assertEquals("가입되지 않은 아이디입니다.",badRequestException.getMessage());
     }
 
     @Test
@@ -141,7 +140,7 @@ class UserServiceTest {
         BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> userService.createToken(userLoginRequestDto));
 
         //then
-        assertEquals(badRequestException.getMessage(),"잘못된 비밀번호 입니다.");
+        assertEquals("잘못된 비밀번호 입니다.",badRequestException.getMessage());
     }
 
     @Test
@@ -156,10 +155,10 @@ class UserServiceTest {
         UserResponseDto userResponseDto = userService.getUser(jwtTokenProvider.getAuthenticationUserDetailsImpl(token));
 
         //then
-        assertEquals(userResponseDto.getUserName(), userSignUpRequestDto.getUserName());
-        assertEquals(userResponseDto.getEmail(), userSignUpRequestDto.getEmail());
-        assertEquals(userResponseDto.getNickName(), userSignUpRequestDto.getNickName());
-        assertEquals(userResponseDto.getPhone(), userSignUpRequestDto.getPhone());
+        assertEquals(userSignUpRequestDto.getUserName(), userResponseDto.getUserName());
+        assertEquals(userSignUpRequestDto.getEmail(), userResponseDto.getEmail());
+        assertEquals(userSignUpRequestDto.getNickName(), userResponseDto.getNickName());
+        assertEquals(userSignUpRequestDto.getPhone(), userResponseDto.getPhone());
     }
 
     @Test
@@ -179,8 +178,8 @@ class UserServiceTest {
         UserResponseDto userResponseDto = userService.modifyUser(jwtTokenProvider.getAuthenticationUserDetailsImpl(token), userRequestDto);
 
         //then
-        assertEquals(userResponseDto.getEmail(), userRequestDto.getEmail());
-        assertEquals(userResponseDto.getPhone(), userRequestDto.getPhone());
+        assertEquals(userRequestDto.getEmail(), userResponseDto.getEmail());
+        assertEquals(userRequestDto.getPhone(), userResponseDto.getPhone());
     }
 
     @Test
