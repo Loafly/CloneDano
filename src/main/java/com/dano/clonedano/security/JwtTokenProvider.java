@@ -64,6 +64,11 @@ public class JwtTokenProvider {
         return userDetails.getUser();
     }
 
+    // JWT 토큰에서 UserDetailsImpl 가져오기
+    public UserDetailsImpl getAuthenticationUserDetailsImpl(String token){
+        return userDetailsServiceImpl.loadUserById(Long.parseLong(this.getUserPk(token)));
+    }
+
     // JWT 토큰에서 username 조회
     public String getAuthenticationUsername(String token) {
         UserDetails userDetails = userDetailsServiceImpl.loadUserById(Long.parseLong(this.getUserPk(token)));
