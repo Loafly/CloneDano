@@ -5,6 +5,7 @@ import com.dano.clonedano.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class ProductService {
         } else if (menu.contains("thrifty")){
             return this.getThriftyProduct();
         } else{
-            return null;
+            return Collections.emptyList();
         }
     }
 

@@ -53,3 +53,7 @@
 |장바구니에서 주문하기|POST|/api/cart/order||
 |주문내역 조회|GET|/api/order||
 |바로 주문하기|POST|/api/order|productId, amount|
+
+## 무중단 배포 전체 구조
+
+<img width="914" alt="스크린샷 2021-05-26 오후 1 29 54" src="https://user-images.githubusercontent.com/60464424/119602623-7c659980-be26-11eb-9ebf-c679d91e135d.png">
