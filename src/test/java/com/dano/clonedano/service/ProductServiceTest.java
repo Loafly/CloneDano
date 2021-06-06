@@ -28,11 +28,6 @@ class ProductServiceTest {
 
     static int SIZE = 100;
 
-    @BeforeAll
-    void beforeAll(){
-
-    }
-
     @BeforeEach
     void setUp() {
         String title = "title";
