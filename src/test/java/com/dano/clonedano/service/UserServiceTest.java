@@ -38,7 +38,7 @@ class UserServiceTest {
     private final UserSignUpRequestDto userSignUpRequestDto = new UserSignUpRequestDto();
 
     @BeforeEach
-    public void beforeEach(){
+    public void setUp(){
         //회원 등록
         userSignUpRequestDto.setUserName("userName");
         userSignUpRequestDto.setPassword("1234");
@@ -50,7 +50,7 @@ class UserServiceTest {
     }
 
     @AfterEach
-    public void afterEach(){
+    public void tearDown(){
         userRepository.deleteAll();
     }
 
