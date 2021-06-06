@@ -26,12 +26,12 @@ class ProductServiceTest {
     @Autowired
     private ProductRepository productRepository;
 
-    static int SIZE = 100;
+    private static final int SIZE = 20;
 
     @BeforeEach
     void setUp() {
         String title = "title";
-        String price = "price";
+        String price = "50000";
         String imageUrl = "imageUrl";
         boolean isDano = false;
         boolean isFree = false;
