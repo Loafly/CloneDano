@@ -31,7 +31,7 @@ class ProductServiceTest {
     @BeforeEach
     void setUp() {
         String title = "title";
-        String price = "50000";
+        String price = "50,000원";
         String imageUrl = "imageUrl";
         boolean isDano = false;
         boolean isFree = false;

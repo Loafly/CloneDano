@@ -9,6 +9,7 @@ import com.dano.clonedano.model.User;
 import com.dano.clonedano.repository.CartRepository;
 import com.dano.clonedano.repository.OrderRepository;
 import com.dano.clonedano.repository.ProductRepository;
+import com.dano.clonedano.repository.UserRepository;
 import com.dano.clonedano.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
 
     public List<CartResponseDto> getCarts(UserDetailsImpl userDetails){
         User user = userDetails.getUser();
@@ -32,15 +34,17 @@ public class CartService {
         List<CartResponseDto> cartResponseDtoList = new ArrayList<>();
 
         for (Cart cart : cartList){
-            String strPrice = cart.getProduct().getPrice().replace("원","").replace(",","");
+            Product product = productRepository.findByProductId(cart.getProduct().getProductId());
+
+            String strPrice = product.getPrice().replace("원","").replace(",","");
             int price = Integer.parseInt(strPrice) * cart.getAmount();
             strPrice = String.format("%,d",price);
 
             CartResponseDto cartResponseDto = CartResponseDto.builder()
                     .cartId(cart.getCartId())
                     .amount(cart.getAmount())
-                    .title(cart.getProduct().getTitle())
-                    .imageUrl(cart.getProduct().getImageUrl())
+                    .title(product.getTitle())
+                    .imageUrl(product.getImageUrl())
                     .price(strPrice + "원")
                     .build();
             cartResponseDtoList.add(cartResponseDto);
@@ -87,14 +91,15 @@ public class CartService {
     }
 
     public void removeCart(UserDetailsImpl userDetails, Long cartId){
-        User user = userDetails.getUser();
-
-        System.out.println("cart.getCartId() = " + cartId);
+        User currentUser = userDetails.getUser();
 
         Cart cart = cartRepository.findByCartId(cartId).orElse(null);
         assert cart != null;
 
-        if (cart.getUser().equals(user)){
+        User cartUser = userRepository.findById(cart.getUser().getUserId()).orElse(null);
+
+        assert cartUser != null;
+        if (cartUser.equals(currentUser)){
             cartRepository.delete(cart);
         }
     }

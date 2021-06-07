@@ -1,12 +1,16 @@
 package com.dano.clonedano.service;
 
 import com.dano.clonedano.dto.*;
+import com.dano.clonedano.model.Cart;
 import com.dano.clonedano.model.Product;
+import com.dano.clonedano.repository.CartRepository;
 import com.dano.clonedano.repository.OrderRepository;
 import com.dano.clonedano.repository.ProductRepository;
 import com.dano.clonedano.repository.UserRepository;
 import com.dano.clonedano.security.JwtTokenProvider;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-class OrderServiceTest {
-
+class CartServiceTest {
     private static final int SIZE = 20;
 
     @Autowired
@@ -35,13 +38,16 @@ class OrderServiceTest {
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    private OrderService orderService;
+    private ProductRepository productRepository;
+
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private CartRepository cartRepository;
 
     @Autowired
     private OrderRepository orderRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
 
     private final UserSignUpRequestDto userSignUpRequestDto = new UserSignUpRequestDto();
     private final UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto();
@@ -95,43 +101,80 @@ class OrderServiceTest {
 
     @AfterEach
     public void tearDown(){
+        cartRepository.deleteAll();
         orderRepository.deleteAll();
         productRepository.deleteAll();
         userRepository.deleteAll();
     }
 
     @Test
-    void getOrder() {
+    void getCarts() {
         //given
-        OrderRequestDto orderRequestDto = new OrderRequestDto();
+        CartRequestDto cartRequestDto = new CartRequestDto();
         List<Product> productList = productRepository.findAll();
         for (int i = 0; i < SIZE; i++){
-            orderRequestDto.setProductId(productList.get(i).getProductId());
-            orderRequestDto.setAmount(i);
-            orderService.registerOrder(jwtTokenProvider.getAuthenticationUserDetailsImpl(token), orderRequestDto);
+            cartRequestDto.setProductId(productList.get(i).getProductId());
+            cartRequestDto.setAmount(i);
+            cartService.registerCart(jwtTokenProvider.getAuthenticationUserDetailsImpl(token), cartRequestDto);
         }
 
         //when
-        List<OrderResponseDto> orderResponseDtoList = orderService.getOrder(jwtTokenProvider.getAuthenticationUserDetailsImpl(token));
+        List<CartResponseDto> cartResponseDtoList = cartService.getCarts(jwtTokenProvider.getAuthenticationUserDetailsImpl(token));
 
         //then
-        assertEquals(productList.size(), orderResponseDtoList.size());
-
+        assertEquals(productList.size(), cartResponseDtoList.size());
     }
 
     @Test
-    void registerOrder() {
+    void registerCart() {
         //given
-        OrderRequestDto orderRequestDto = new OrderRequestDto();
+        CartRequestDto cartRequestDto = new CartRequestDto();
         List<Product> productList = productRepository.findAll();
-        orderRequestDto.setProductId(productList.get(0).getProductId());
-        orderRequestDto.setAmount(3);
+        cartRequestDto.setProductId(productList.get(0).getProductId());
+        cartRequestDto.setAmount(3);
 
         //when
-        Long orderId = orderService.registerOrder(jwtTokenProvider.getAuthenticationUserDetailsImpl(token), orderRequestDto);
-        Long productId = orderRepository.findByOrderId(orderId).get().getProduct().getProductId();
+        Long cartId = cartService.registerCart(jwtTokenProvider.getAuthenticationUserDetailsImpl(token), cartRequestDto);
+        Long productId = cartRepository.findByCartId(cartId).get().getProduct().getProductId();
 
         //then
         assertEquals(productId, productList.get(0).getProductId());
+    }
+
+    @Test
+    void registerOrderRemoveCart() {
+        //given
+        CartRequestDto cartRequestDto = new CartRequestDto();
+        List<Product> productList = productRepository.findAll();
+        for (int i = 0; i < SIZE; i++){
+            cartRequestDto.setProductId(productList.get(i).getProductId());
+            cartRequestDto.setAmount(i);
+            cartService.registerCart(jwtTokenProvider.getAuthenticationUserDetailsImpl(token), cartRequestDto);
+        }
+
+        //when
+        List<Long> orderIdList = cartService.registerOrderRemoveCart(jwtTokenProvider.getAuthenticationUserDetailsImpl(token));
+        List<Cart> cartList = cartRepository.findAll();
+
+        //then
+        assertEquals(productList.size(), orderIdList.size());
+        assertEquals(0, cartList.size());
+    }
+
+    @Test
+    void removeCart() {
+        //given
+        CartRequestDto cartRequestDto = new CartRequestDto();
+        List<Product> productList = productRepository.findAll();
+        cartRequestDto.setProductId(productList.get(0).getProductId());
+        cartRequestDto.setAmount(3);
+
+        //when
+        Long cartId = cartService.registerCart(jwtTokenProvider.getAuthenticationUserDetailsImpl(token), cartRequestDto);
+        cartService.removeCart(jwtTokenProvider.getAuthenticationUserDetailsImpl(token), cartId);
+        List<Cart> cartList = cartRepository.findAll();
+
+        //then
+        assertEquals(0, cartList.size());
     }
 }
